@@ -17,6 +17,38 @@ Whether you're spinning up a new app, automating common Flutter commands, or int
 
 ---
 
+## 🚀 TODO / Feature Roadmap
+
+- [x] Create Flutter project with Git, README, and .gitignore
+- [x] Run common Flutter commands (clean, build, pub get)
+- [x] Open project in IDEs like VSCode and Android Studio
+
+### 🔜 Upcoming Features
+
+- [ ] Enhance `create` command:
+  - Prompt user for:
+    - Project name
+    - Package name
+    - Description
+  - Ask user to select a state management approach:
+    - GetX
+    - BLoC
+    - Provider
+    - Riverpod
+  - Add boilerplate code and dependencies based on selected option
+
+- [ ] New `build` command:
+  - Prompt user to:
+    - Select build environment (dev, staging, prod)
+    - Choose between APK or App Bundle
+    - Enter version and build number
+  - Generate final build file with a custom name based on inputs
+
+- [ ] Scaffold GetX/BLoC folder structure and initial files
+- [ ] Configurable project templates
+- [ ] Auto-generate `.env` files for environments
+- [ ] Optional pre-commit Git hooks for linting/formatting
+
 ## 📦 Installation
 
 Clone the repo:
