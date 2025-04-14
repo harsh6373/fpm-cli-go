@@ -8,9 +8,9 @@ import (
 
 // rootCmd represents the base command
 var rootCmd = &cobra.Command{
-	Use:   "flutter-cli-manager",
+	Use:   "fpm-cli",
 	Short: "A CLI tool to manage Flutter projects",
-	Long:  `flutter-cli-manager is a CLI application written in Go to streamline Flutter project management tasks.`,
+	Long:  `fpm-cli is a CLI application written in Go to streamline Flutter project management tasks.`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
