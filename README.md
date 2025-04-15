@@ -57,3 +57,21 @@ Clone the repo:
 git clone https://github.com/yourusername/fpm-cli-go.git
 cd fpm-cli-go
 go build -o fpm
+
+ 
+ ## 📁 Project structure
+
+// fpm-cli-go/
+// ├── cmd/
+// │   ├── create.go
+// │   └── build.go
+// ├── helpers/
+// │   ├── flutter.go
+// │   └── fs.go
+// ├── templates/
+// │   └── ... (future use for templated files)
+// ├── main.go
+// └── go.mod
+
+// ========================================
+// 📄 main.go
