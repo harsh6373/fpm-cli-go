@@ -1,15 +1,13 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
-	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/harsh6373/fpm-cli-go/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -24,13 +22,12 @@ var buildCmd = &cobra.Command{
 			projectPath = cwd
 		}
 
-		flutterRoot, err := findFlutterProjectRoot(projectPath)
+		flutterRoot, err := utils.FindFlutterProjectRoot(projectPath)
 		if err != nil {
 			fmt.Println("❌", err)
 			return
 		}
 
-		// Change to Flutter project root
 		if err := os.Chdir(flutterRoot); err != nil {
 			fmt.Println("❌ Failed to switch to project directory:", err)
 			return
@@ -46,34 +43,13 @@ var buildCmd = &cobra.Command{
 		}
 
 		survey.Ask([]*survey.Question{
-			{
-				Name: "Env",
-				Prompt: &survey.Select{
-					Message: "Select environment:",
-					Options: []string{"DEVELOPMENT", "STAGING", "PRODUCTION"},
-				},
-			},
-			{
-				Name: "Type",
-				Prompt: &survey.Select{
-					Message: "Build type:",
-					Options: []string{"APK", "App Bundle"},
-				},
-			},
-			{
-				Name:     "Version",
-				Prompt:   &survey.Input{Message: "Enter version (e.g. 1.0.0):"},
-				Validate: survey.Required,
-			},
-			{
-				Name:     "Build",
-				Prompt:   &survey.Input{Message: "Enter build number (e.g. 5):"},
-				Validate: survey.Required,
-			},
+			{Name: "Env", Prompt: &survey.Select{Message: "Select environment:", Options: []string{"DEVELOPMENT", "STAGING", "PRODUCTION"}}},
+			{Name: "Type", Prompt: &survey.Select{Message: "Build type:", Options: []string{"APK", "App Bundle"}}},
+			{Name: "Version", Prompt: &survey.Input{Message: "Enter version (e.g. 1.0.0):"}, Validate: survey.Required},
+			{Name: "Build", Prompt: &survey.Input{Message: "Enter build number (e.g. 5):"}, Validate: survey.Required},
 		}, &answers)
 
-		timestamp := time.Now().Format("060102") // YYMMDD
-		outputName := fmt.Sprintf("%s_%s_v%s+%s_%s", strings.ToLower(projectName), strings.ToLower(answers.Env), answers.Version, answers.Build, timestamp)
+		outputName := utils.GenerateArtifactName(projectName, answers.Env, answers.Version, answers.Build)
 		buildsDir := filepath.Join(flutterRoot, "builds")
 		_ = os.MkdirAll(buildsDir, os.ModePerm)
 
@@ -96,7 +72,6 @@ var buildCmd = &cobra.Command{
 			return
 		}
 
-		// Move final build to builds/ directory
 		var buildOutputPath string
 		if answers.Type == "APK" {
 			buildOutputPath = filepath.Join("build", "app", "outputs", "flutter-apk", "app-release.apk")
@@ -112,19 +87,6 @@ var buildCmd = &cobra.Command{
 
 		fmt.Println("✅ Build completed: ", finalOutputPath)
 	},
-}
-
-func findFlutterProjectRoot(startDir string) (string, error) {
-	absStart, err := filepath.Abs(startDir)
-	if err != nil {
-		return "", err
-	}
-	for dir := absStart; dir != "/" && dir != "."; dir = filepath.Dir(dir) {
-		if _, err := os.Stat(filepath.Join(dir, "pubspec.yaml")); err == nil {
-			return dir, nil
-		}
-	}
-	return "", errors.New("flutter project root not found (missing pubspec.yaml)")
 }
 
 func init() {
