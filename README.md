@@ -1,77 +1,121 @@
 # fpm-cli-go
 
-**fpm-cli-go** is a powerful and flexible CLI tool written in Go for managing Flutter projects more efficiently.
+**fpm-cli-go** is a powerful and flexible CLI tool written in Go for managing Flutter projects efficiently and consistently.
 
-Whether you're spinning up a new app, automating common Flutter commands, or integrating Git setup out-of-the-box, `fpm` makes your workflow faster and smarter ⚡.
+Whether you're spinning up a new app, generating boilerplate, or building APKs with env-specific configs — `fpm` makes it seamless ⚡.
 
 ---
 
 ## 🛠 Features
 
-- 🚀 Create new Flutter projects via `flutter create`
-- ⚙️ Run common Flutter commands (build, clean, pub get, etc.)
-- 📝 Automatically generate `.gitignore` and `README.md`
-- 🔧 Initialize Git repo for new projects
-- 🖥 Open projects in IDEs (VSCode, Android Studio)
-- 📦 Scalable CLI structure using Cobra
+- 🚀 Create new Flutter projects with Git, README, and state management boilerplate (GetX, BLoC, Provider, Riverpod)
+- 🔧 Initialize Android signing configuration (`keytool`, `key.properties`)
+- 📦 Build Flutter apps (APK or App Bundle) with environment and version info
+- 📜 Auto-generate `README.md`, `.gitignore`, and Git setup
+- 🐚 Shell completion scripts for Bash, Zsh, Fish, PowerShell
+- 🛠 Modular Go structure using Cobra for future extension
 
 ---
 
-## 🚀 TODO / Feature Roadmap
+## ✅ Completed Roadmap
 
-- [x] Create Flutter project with Git, README, and .gitignore
-- [x] Run common Flutter commands (clean, build, pub get)
-- [x] Open project in IDEs like VSCode and Android Studio
+- [x] `create` command: Generate Flutter app with boilerplate and Git
+- [x] `build` command: Build APK/AAB for environments: dev/staging/prod
+- [x] `signing` command: Generate Android keystore and properties file
+- [x] Shell completions (Bash, Zsh, Fish, PowerShell)
+- [x] Makefile for builds, tests, packaging
 
-### 🔜 Upcoming Features
+---
 
-- [ ] Enhance `create` command:
-  - Prompt user for:
-    - Project name
-    - Package name
-    - Description
-  - Ask user to select a state management approach:
-    - GetX
-    - BLoC
-    - Provider
-    - Riverpod
-  - Add boilerplate code and dependencies based on selected option
+## 🔮 Upcoming Features
 
-- [ ] New `build` command:
-  - Prompt user to:
-    - Select build environment (dev, staging, prod)
-    - Choose between APK or App Bundle
-    - Enter version and build number
-  - Generate final build file with a custom name based on inputs
+- [ ] Pre-built templates (GetX, Clean Architecture)
+- [ ] Auto environment file generation (`.env`)
+- [ ] Git pre-hooks (format, lint before commit)
+- [ ] Flutter pub commands (`clean`, `pub get`, etc.)
+- [ ] IDE open command (`--vscode`, `--androidstudio`)
 
-- [ ] Scaffold GetX/BLoC folder structure and initial files
-- [ ] Configurable project templates
-- [ ] Auto-generate `.env` files for environments
-- [ ] Optional pre-commit Git hooks for linting/formatting
+---
 
 ## 📦 Installation
 
-Clone the repo:
+### Option 1: Go Native
+
+Requires Go 1.18+
+
+```bash
+go install github.com/yourusername/fpm-cli-go@latest
+```
+
+Then run:
+
+```bash
+fpm create
+```
+
+### Option 2: Manual Clone + Build
 
 ```bash
 git clone https://github.com/yourusername/fpm-cli-go.git
 cd fpm-cli-go
-go build -o fpm
+make install
+```
 
- 
- ## 📁 Project structure
+---
 
-// fpm-cli-go/
-// ├── cmd/
-// │   ├── create.go
-// │   └── build.go
-// ├── helpers/
-// │   ├── flutter.go
-// │   └── fs.go
-// ├── templates/
-// │   └── ... (future use for templated files)
-// ├── main.go
-// └── go.mod
+## 🧪 Usage
 
-// ========================================
-// 📄 main.go
+```bash
+fpm create     # Start a new Flutter project
+fpm build      # Build APK/AAB with env + version
+fpm signing    # Generate Android keystore & key.properties
+```
+
+---
+
+## 🐚 Shell Completion
+
+```bash
+make completion
+```
+
+This generates completion scripts in the `completions/` folder for:
+- Bash
+- Zsh
+- Fish
+- PowerShell
+
+---
+
+## 🔨 Makefile Commands
+
+```bash
+make build         # Build for your OS
+make test          # Run unit tests
+make install       # Install globally via go install
+make release       # Cross-compile for all platforms (Linux, macOS, Windows)
+make completion    # Generate shell completion scripts
+make clean         # Clean build artifacts
+```
+
+---
+
+## 📁 Project Structure
+
+```bash
+fpm-cli-go/
+├── cmd/            # Cobra commands: create, build, signing, etc.
+├── utils/          # Reusable helpers: FS, Git, Signing, Readme
+├── completions/    # Auto-generated shell completion scripts
+├── bin/            # Compiled binaries go here (after `make build`)
+├── main.go         # CLI entry point
+├── go.mod
+├── Makefile        # Build, test, cross-compile
+```
+
+---
+
+## ❤️ Contributing
+
+Feel free to fork, PR, or raise issues! Open to ideas or improvements from the Flutter/Go/CLI community.
+
