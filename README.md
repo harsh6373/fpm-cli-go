@@ -24,6 +24,7 @@ Whether you're spinning up a new app, generating boilerplate, or building APKs w
 - [x] `signing` command: Generate Android keystore and properties file
 - [x] Shell completions (Bash, Zsh, Fish, PowerShell)
 - [x] Makefile for builds, tests, packaging
+- [x] Downloadable binaries for Linux, macOS, Windows
 
 ---
 
@@ -41,10 +42,10 @@ Whether you're spinning up a new app, generating boilerplate, or building APKs w
 
 ### Option 1: Go Native
 
-Requires Go 1.18+
+> Requires Go 1.18+
 
 ```bash
-go install github.com/yourusername/fpm-cli-go@latest
+go install github.com/harsh6373/fpm-cli-go@latest
 ```
 
 Then run:
@@ -53,10 +54,29 @@ Then run:
 fpm create
 ```
 
-### Option 2: Manual Clone + Build
+---
+
+### Option 2: Download Precompiled Binaries
+
+Download from the [Releases Page](https://github.com/harsh6373/fpm-cli-go/releases)
+
+#### Example for Linux:
 
 ```bash
-git clone https://github.com/yourusername/fpm-cli-go.git
+curl -L https://github.com/harsh6373/fpm-cli-go/releases/latest/download/fpm-linux -o /usr/local/bin/fpm
+chmod +x /usr/local/bin/fpm
+```
+
+#### macOS or Windows:
+
+Head to the GitHub [Releases](https://github.com/harsh6373/fpm-cli-go/releases) and grab your platform's binary.
+
+---
+
+### Option 3: Manual Clone + Build
+
+```bash
+git clone https://github.com/harsh6373/fpm-cli-go.git
 cd fpm-cli-go
 make install
 ```
@@ -96,9 +116,8 @@ make install       # Install globally via go install
 make release       # Cross-compile for all platforms (Linux, macOS, Windows)
 make completion    # Generate shell completion scripts
 make clean         # Clean build artifacts
-```
-
 ---
+```
 
 ## 📁 Project Structure
 
@@ -117,5 +136,11 @@ fpm-cli-go/
 
 ## ❤️ Contributing
 
-Feel free to fork, PR, or raise issues! Open to ideas or improvements from the Flutter/Go/CLI community.
+This is an open-source project built with ❤️ and Go. Contributions are **super welcome**!
 
+Feel free to:
+- Fork the repo
+- Submit Pull Requests
+- Open issues or suggest ideas
+
+Let's build the best Flutter project manager CLI together!
