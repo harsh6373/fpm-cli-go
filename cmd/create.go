@@ -46,12 +46,33 @@ var createCmd = &cobra.Command{
 		os.Chdir(projectBase)
 
 		fmt.Println("🚀 Creating Flutter project...")
-		if err := exec.Command("flutter", "create", "--org", answers.PackageName, "--project-name", projectName, "--description", answers.Description, projectName).Run(); err != nil {
+
+		flutterPath, err := exec.LookPath("flutter")
+		if err != nil {
+			fmt.Println("❌ 'flutter' command not found in PATH.")
+			fmt.Println("💡 Add Flutter to your PATH or use the full path to the flutter binary.")
+			return
+		}
+		fmt.Println("✅ Found flutter at:", flutterPath)
+
+		createFlutterCmd := exec.Command(flutterPath, "create",
+			"--org", answers.PackageName,
+			"--project-name", projectName,
+			"--description", answers.Description,
+			projectName,
+		)
+		createFlutterCmd.Stdout = os.Stdout
+		createFlutterCmd.Stderr = os.Stderr
+
+		if err := createFlutterCmd.Run(); err != nil {
 			fmt.Println("❌ Failed to create Flutter project:", err)
 			return
 		}
 
-		os.Chdir(projectName)
+		if err := os.Chdir(projectName); err != nil {
+			fmt.Println("❌ Failed to switch into project directory:", err)
+			return
+		}
 
 		switch answers.StateManager {
 		case "GetX":
